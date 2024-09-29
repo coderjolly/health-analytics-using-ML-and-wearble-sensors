@@ -1,6 +1,6 @@
 # Health Analytics using ML and Wearable Sensors
 
-## 1.Directory Structure
+## 1. Directory Structure
 ```
 ├── data/                                           <- Contains data files.
 │   ├── 1_ObesityDataSet_raw_and_data_synthetic.csv <- Raw and synthetic data for ObesityDataSet.
@@ -14,7 +14,7 @@
 └── requirements.txt                                <- File listing project dependencies.
 ```
 
-## 2.Data Overview
+## 2. Data Overview
 
 The dataset consists of 2,111 records and includes the following columns:
 - **Gender, Age, Height, Weight**: Demographic and physical data.
@@ -24,7 +24,7 @@ The dataset consists of 2,111 records and includes the following columns:
 
 ## 3. Data Cleaning
 
-The cleaning process in the notebook (`1_Data_Cleaning_Part1.ipynb`) involved several critical steps:
+The cleaning process in the notebook (`2_Data_Cleaning_Part1.ipynb`) involved several critical steps:
 
 ### 3.1 Handling Missing Values
 
@@ -73,7 +73,7 @@ This correlation matrix helps highlight which features might be more important f
 
 ### Outliers Detection
 
-As seen in the boxplots above, the age column has some outliers, however, age between 40-60 is not necessarily outliers. Therefore, outliers in age column does not need much treatment. Further, all other columns except for NCP do not have outliers. NCP column has outliers, however, it is not necessary to treat them as they are not extreme.
+As seen in the boxplots below, the age column has some outliers, however, age between 40-60 is not necessarily outliers. Therefore, outliers in age column does not need much treatment. Further, all other columns except for NCP do not have outliers. NCP column has outliers, however, it is not necessary to treat them as they are not extreme.
 
 ![outliers](ss/outliers.png)
 
