@@ -86,6 +86,7 @@ As seen in the boxplots below, the age column has some outliers, however, age be
 ## 5. Model Building
 
 ### 5.1 Classifying the people whether they monitor the calorie consumption or not (SCC)
+
 - Using Sipport Vector Machine, I have achieved the following results:
 
 | **C Value** | **Training Accuracy** | **Validation Accuracy**  |  **Test Accuracy**  |
@@ -113,6 +114,23 @@ As seen in the boxplots below, the age column has some outliers, however, age be
 
 ![xgboost](ss/xgboost-loss.png)
 ![xgboost](ss/xgboost-error.png)
+
+### 5.2 Classification of the dataset into the 4 age groups as target variables
+- Using Classifier Chains of Naive Bayes Algorithm
+
+Naive Bayes has been chosen because of the following reasons:
+- Simplicity: Naive Bayes is simpler and faster to train compared to Random Forest or XGBoost, which may require more time to tune hyperparameters like tree depth, number of estimators, learning rate, etc. In this case, simplicity is opted over complexity.
+- Interpretability: Naive Bayes models are easy to interpret because they make predictions based on straightforward probability calculations.
+- Data Size and Model Complexity: As the dataset is not too large and the relationships between features and target variables are relatively simple, Naive Bayes can perform well without the added complexity of models like Random Forest or XGBoost.
+
+Why have Classifier Chains been used?
+Although the age groups are independent in the data (as an individual can only belong to one age group), the model designer might have still opted for Classifier Chains for a few reasons:
+
+- Capturing Relationships in a Sequential Manner: Even though the age groups are mutually exclusive, Classifier Chains could still help model more subtle relationships between features and age groups (e.g., patterns that might influence belonging to certain age groups). For instance, Classifier Chains could allow the model to learn that predicting Age_Group_14_19 makes predicting Age_Group_26.0_61.0 unlikely.
+
+- Generalizing the Model: Classifier Chains are often used when there’s a possibility that labels may be related in other datasets or applications. It makes the model more flexible for potential future use, even if the age groups are independent in this dataset.
+
+- No Harm in Using Classifier Chains: Since Classifier Chains allow for sequential predictions, they don't negatively affect the performance if labels are independent; they simply add the possibility to model relationships if they exist. In this case, they may still function similarly to normal Naive Bayes but with a different internal structure.
 
 
 
