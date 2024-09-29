@@ -4,10 +4,16 @@
 ```
 ├── data/                                           <- Contains data files.
 │   ├── 1_ObesityDataSet_raw_and_data_synthetic.csv <- Raw and synthetic data for ObesityDataSet.
-│   └── 2_Data_Clean.csv                            <- Cleaned data file.
+│   └── 3_data_clean.csv                            <- Cleaned data file.
 ├── notebooks/                                      <- Contains Jupyter notebooks.
-│   ├── 1_Data_Cleaning_Part1.ipynb                 <- Notebook for Data Cleaning Part 1.
-│   └── 2_Part1.ipynb                               <- Notebook for Part 1.
+│   ├── 2_data_cleaning.ipynb                       <- Notebook for data cleaning.
+│   └── 4_ml_models.ipynb                           <- Notebook for ML Models.
+├── ss/                                             <- Contains screenshots for README.
+|   ├──age-distribution.png                         <- Age distribution across obesity levels.
+|   ├──correlation-matrix.png                       <- Correlation matrix of numeric features.
+|   ├──obesity-levels.png                           <- Distribution of the target variable.
+|   ├──outliers.png                                 <- Boxplots showing outliers in the dataset.
+|   └──weight-distribution.png                      <- Weight distribution across obesity levels.
 ├── .gitignore                                      <- List of files and folders git should ignore
 ├── LICENSE                                         <- License file for the project.
 ├── README.md                                       <- Top-level README file providing an overview of the project.
@@ -24,7 +30,7 @@ The dataset consists of 2,111 records and includes the following columns:
 
 ## 3. Data Cleaning
 
-The cleaning process in the notebook (`2_Data_Cleaning_Part1.ipynb`) involved several critical steps:
+The cleaning process in the notebook (`2_data_cleaning.ipynb`) involved several critical steps:
 
 ### 3.1 Handling Missing Values
 
@@ -76,5 +82,38 @@ This correlation matrix helps highlight which features might be more important f
 As seen in the boxplots below, the age column has some outliers, however, age between 40-60 is not necessarily outliers. Therefore, outliers in age column does not need much treatment. Further, all other columns except for NCP do not have outliers. NCP column has outliers, however, it is not necessary to treat them as they are not extreme.
 
 ![outliers](ss/outliers.png)
+
+## 5. Model Building
+
+### 5.1 Classifying the people whether they monitor the calorie consumption or not (SCC)
+- Using Sipport Vector Machine, I have achieved the following results:
+
+| **C Value** | **Training Accuracy** | **Validation Accuracy**  |  **Test Accuracy**  |
+|-------------|-----------------------|--------------------------|---------------------|
+|    0.10     |     0.9597180293174   |     0.9431372549019608   |   0.9503641456582   |
+|    0.25     |     0.9597180293174   |     0.9431372549019608   |   0.9503641456582   |
+|    0.50     |     0.9597180293174   |     0.9431372549019608   |   0.9503641456582   |
+|    1.00     |     0.9597180293174   |     0.9431372549019608   |   0.9456582633053   |
+|    2.00     |     -                 |     0.9336694677871149   |   0.9432773109243   |
+
+
+- Random Forest, we achieved the following results:
+  | **Metric**              | **Random Forest Classifier** |
+  |-------------------------|------------------------------|
+  | Training Accuracy       | 1.0000000000000000           |
+  | Validation Accuracy     | 0.9668246445497630           |
+  | Test Accuracy           | 0.9598108747044918           |
+
+- XGBoost, we achieved the following results:
+  | **Metric**              | **XGBoost Classifier**       |
+  |-------------------------|------------------------------|
+  | Training Accuracy       | 1.0000000000000000           |
+  | Validation Accuracy     | 0.9644549763033176           |
+  | Test Accuracy           | 0.9598108747044918           |
+
+![xgboost](ss/xgboost-loss.png)
+![xgboost](ss/xgboost-error.png)
+
+
 
 
