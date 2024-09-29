@@ -133,5 +133,50 @@ Although the age groups are independent in the data (as an individual can only b
 - No Harm in Using Classifier Chains: Since Classifier Chains allow for sequential predictions, they don't negatively affect the performance if labels are independent; they simply add the possibility to model relationships if they exist. In this case, they may still function similarly to normal Naive Bayes but with a different internal structure.
 
 
+| **Metric**               | **Naive Bayes Classifier** |
+|--------------------------|----------------------------|
+| Training Accuracy        | 0.5703001579778831         |
+| Validation Accuracy      | 0.5710900473933649         |
+| Test Accuracy            | 0.5697399527186762         |
+
+- Using Random Forest Classifier with LabelPower Set
+
+Why use Label Powerset?
+
+Age_Group is considered to be a multi-label target variable and Label Powerset helps transform a multi-label problem into a multi-class problem. This works by treating each unique combination of labels in the dataset as a single class. Instead of predicting each label independently, it treats the problem as a multi-class classification with one class for each possible combination of labels. Unfortunately, after examination.....Age_Group isn't a multi-label value as it has independent classes. So, thinking Age_Group was multi-label class problem, it was opted for the following reasons:
+
+- Flexibility: Label Powerset can handle multi-class problems, which makes it more flexible for future use if the target variable changes to a multi-class problem.
+- Handles label dependencies: By treating label combinations as classes, it can capture correlations and dependencies between labels. For instance, certain age groups may be more likely to overlap in some way, or transportation modes could have overlapping usage patterns.
+- Transforms multi-label into a solvable problem: By converting multi-label data into multi-class data, it allows a traditional classifier like Random Forest to be applied to a problem it wouldn't otherwise be able to solve.
+
+| **Metric**              | **Random Forest Classifier** |
+|-------------------------|------------------------------|
+| Training Accuracy        | 1.0000000000000000          |
+| Validation Accuracy      | 0.9928909952606635          |
+| Test Accuracy            | 0.9929078014184397          |
+
+
+### 5.3 Classification of People based on Obesity Levels
+
+- Using Support Vector Machine
+  A heatmap is generated using the Seaborn heatmap() function to visualize the accuracy and validation accuracy for each obesity type.
+
+  ![svm](ss/svm-accuracy-val.png)
+
+  A line plot will display how the accuracy and validation accuracy change across different obesity types.
+
+  ![svm](ss/svm-accuracy-obesity-types.png)
+
+- Using Random Forest
+  A heatmap is generated using the Seaborn heatmap() function to visualize the accuracy and validation accuracy for each obesity type.
+
+  ![rf](ss/rf-accuracy-val.png)
+   
+   A line plot will display how the accuracy and validation accuracy change across different obesity types.
+
+  ![svm](ss/rf-accuracy-obesity-types.png)
+
+
+
 
 
