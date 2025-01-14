@@ -1,6 +1,8 @@
 # Health Analytics using ML and Wearable Sensors
 
-## 1. Directory Structure
+Health analytics using machine learning offers transformative insights, especially when coupled with data from wearable sensors. This project delves into the classification of health-related metrics, including obesity levels, age groups, and calorie consumption patterns. The dataset comprises diverse features such as age, weight, height, and lifestyle habits, which are processed and analyzed using a variety of machine learning models. These models demonstrate high accuracy and reliability in predicting complex health patterns, enabling better understanding and proactive health management.
+
+## Directory Structure
 ```
 ├── data/                                           <- Contains data files.
 │   ├── 1_ObesityDataSet_raw_and_data_synthetic.csv <- Raw and synthetic data for ObesityDataSet.
@@ -20,7 +22,9 @@
 └── requirements.txt                                <- File listing project dependencies.
 ```
 
-## 2. Data Overview
+## Methodology
+
+### Data Overview
 
 The dataset consists of 2,111 records and includes the following columns:
 - **Gender, Age, Height, Weight**: Demographic and physical data.
@@ -28,25 +32,25 @@ The dataset consists of 2,111 records and includes the following columns:
 - **CALC, MTRANS**: Consumption habits and transportation methods.
 - **NObeyesdad**: Target variable representing obesity levels.
 
-## 3. Data Cleaning
+### 1. Data Cleaning
 
 The cleaning process in the notebook (`2_data_cleaning.ipynb`) involved several critical steps:
 
-### 3.1 Handling Missing Values
+#### 1.1 Handling Missing Values
 
 No missing values were detected in the dataset. Therefore, no imputation was performed, as all values were intact after cleaning.
 
-### 3.2 Scaling
+#### 1.2 Scaling
 
 Numeric columns such as `Age`, `Weight`, `FCVC`, `NCP`, `CH2O`, and `FAF` were **scaled** using **Min-Max scaling**. This transformation ensured that all features were within the same range (0 to 1), which is important for machine learning algorithms sensitive to the magnitude of the inputs.
 
-### 3.3 One-Hot Encoding
+#### 1.3 One-Hot Encoding
 
 Categorical columns like `CAEC`, `CALC`, `MTRANS`, and the target variable `NObeyesdad` were **one-hot encoded**. This process converted the categorical variables into multiple binary columns so that the machine learning models can interpret them correctly.
 
-## 4. Exploratory Data Analysis (EDA)
+### 2. Exploratory Data Analysis (EDA)
 
-### 4.1 Distribution of the Target Variable (`NObeyesdad`)
+#### 2.1 Distribution of the Target Variable (`NObeyesdad`)
 
 The target variable `NObeyesdad` represents 7 distinct obesity levels:
 - **Normal_Weight**
@@ -77,17 +81,19 @@ This correlation matrix helps highlight which features might be more important f
 
 ![correlation-matrix](ss/correlation-matrix.png)
 
-### Outliers Detection
+### 3. Outliers Detection
 
 As seen in the boxplots below, the age column has some outliers, however, age between 40-60 is not necessarily outliers. Therefore, outliers in age column does not need much treatment. Further, all other columns except for NCP do not have outliers. NCP column has outliers, however, it is not necessary to treat them as they are not extreme.
 
 ![outliers](ss/outliers.png)
 
-## 5. Model Building
+### 4. Model Building
 
-### 5.1 Classifying the people whether they monitor the calorie consumption or not (SCC)
+#### 4.1 Classifying the people whether they monitor the calorie consumption or not (SCC)
 
-- Using Sipport Vector Machine, I have achieved the following results:
+I have achieved the following results:
+
+- Using Support Vector Machine, 
 
 | **C Value** | **Training Accuracy** | **Validation Accuracy**  |  **Test Accuracy**  |
 |-------------|-----------------------|--------------------------|---------------------|
@@ -97,15 +103,16 @@ As seen in the boxplots below, the age column has some outliers, however, age be
 |    1.00     |     0.9597180293174   |     0.9431372549019608   |   0.9456582633053   |
 |    2.00     |     -                 |     0.9336694677871149   |   0.9432773109243   |
 
-
-- Random Forest, we achieved the following results:
+- Using Random Forests:
+  
   | **Metric**              | **Random Forest Classifier** |
   |-------------------------|------------------------------|
   | Training Accuracy       | 1.0000000000000000           |
   | Validation Accuracy     | 0.9668246445497630           |
   | Test Accuracy           | 0.9598108747044918           |
 
-- XGBoost, we achieved the following results:
+- Using XGBoosts:
+  
   | **Metric**              | **XGBoost Classifier**       |
   |-------------------------|------------------------------|
   | Training Accuracy       | 1.0000000000000000           |
@@ -115,15 +122,17 @@ As seen in the boxplots below, the age column has some outliers, however, age be
 ![xgboost](ss/xgboost-loss.png)
 ![xgboost](ss/xgboost-error.png)
 
-### 5.2 Classification of the dataset into the 4 age groups as target variables
-- Using Classifier Chains of Naive Bayes Algorithm
+#### 4.2 Classification of the dataset into the 4 age groups as target variables
+
+- ##### Using Classifier Chains of Naive Bayes Algorithm
 
 Naive Bayes has been chosen because of the following reasons:
 - Simplicity: Naive Bayes is simpler and faster to train compared to Random Forest or XGBoost, which may require more time to tune hyperparameters like tree depth, number of estimators, learning rate, etc. In this case, simplicity is opted over complexity.
 - Interpretability: Naive Bayes models are easy to interpret because they make predictions based on straightforward probability calculations.
 - Data Size and Model Complexity: As the dataset is not too large and the relationships between features and target variables are relatively simple, Naive Bayes can perform well without the added complexity of models like Random Forest or XGBoost.
 
-Why have Classifier Chains been used?
+###### Why have Classifier Chains been used?
+
 Although the age groups are independent in the data (as an individual can only belong to one age group), the model designer might have still opted for Classifier Chains for a few reasons:
 
 - Capturing Relationships in a Sequential Manner: Even though the age groups are mutually exclusive, Classifier Chains could still help model more subtle relationships between features and age groups (e.g., patterns that might influence belonging to certain age groups). For instance, Classifier Chains could allow the model to learn that predicting Age_Group_14_19 makes predicting Age_Group_26.0_61.0 unlikely.
@@ -139,9 +148,9 @@ Although the age groups are independent in the data (as an individual can only b
 | Validation Accuracy      | 0.5710900473933649         |
 | Test Accuracy            | 0.5697399527186762         |
 
-- Using Random Forest Classifier with LabelPower Set
+- ##### Using Random Forest Classifier with LabelPower Set
 
-Why use Label Powerset?
+###### Why use Label Powerset?
 
 Age_Group is considered to be a multi-label target variable and Label Powerset helps transform a multi-label problem into a multi-class problem. This works by treating each unique combination of labels in the dataset as a single class. Instead of predicting each label independently, it treats the problem as a multi-class classification with one class for each possible combination of labels. Unfortunately, after examination.....Age_Group isn't a multi-label value as it has independent classes. So, thinking Age_Group was multi-label class problem, it was opted for the following reasons:
 
@@ -156,9 +165,9 @@ Age_Group is considered to be a multi-label target variable and Label Powerset h
 | Test Accuracy            | 0.9929078014184397          |
 
 
-### 5.3 Classification of People based on Obesity Levels
+#### 4.3 Classification of People based on Obesity Levels
 
-- Using Support Vector Machine
+- ##### Using Support Vector Machine
   A heatmap is generated using the Seaborn heatmap() function to visualize the accuracy and validation accuracy for each obesity type.
 
   ![svm](ss/svm-accuracy-val.png)
@@ -167,7 +176,7 @@ Age_Group is considered to be a multi-label target variable and Label Powerset h
 
   ![svm](ss/svm-accuracy-obesity-types.png)
 
-- Using Random Forest
+- ##### Using Random Forest
   A heatmap is generated using the Seaborn heatmap() function to visualize the accuracy and validation accuracy for each obesity type.
 
   ![rf](ss/rf-accuracy-val.png)
